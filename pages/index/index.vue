@@ -4,6 +4,21 @@
 		<!-- <text>欢迎光临！！！</text>
 		<text>这里是 城院小餐馆</text> -->
 	</view>
+	
+	<!-- 轮播图组件 -->
+	<view class="swiper-container">
+		<swiper class="swiper" 
+				indicator-dots 
+				autoplay 
+				circular 
+				:interval="3000" 
+				:duration="1000">
+			<swiper-item v-for="(item,index) in swiperList" :key="index">
+				<image :src="item.image_src" mode="aspectFill"></image>
+			</swiper-item>
+		</swiper>
+	</view>
+
 	<!-- 方块 -->
 	<view class="people-view">
 		<view class="hello">客官~~ 您几位？</view>
@@ -31,7 +46,19 @@ export default {
 		return {
 			num:-1,
 			people: [1,2,3,4,5,6,7,8,9,10],
-			table_number:null
+			table_number:null,
+			// 添加轮播图数据
+			swiperList: [
+				{
+					image_src: "http://localhost/image/swiper/s1.jpg"
+				},
+				{
+					image_src: "http://localhost/image/swiper/s2.jpg" 
+				},
+				{
+					image_src: "http://localhost/image/swiper/s3.jpg"
+				}
+			]
 		}
 	},
 	methods: {
@@ -72,7 +99,8 @@ page{
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	padding-top: 270rpx;
+	padding-top: 50rpx;
+	padding-bottom: 30rpx;
 	font-style: normal;
 }
 .welcome text{
@@ -89,7 +117,7 @@ page{
 	position: fixed;
 	left: 30rpx;
 	right: 30rpx;
-	bottom: 100rpx;
+	bottom: 50rpx;
 	height: 550rpx;
 	border-radius: 15rpx;
 }
@@ -144,5 +172,20 @@ page{
 	/* background-color: #f6c947 !important; */
 	color: #000000 !important;
 	background:linear-gradient(to right,#ff8f8f,#fdcaba,#ff8f8f,#ff7575) !important;
+}
+/* 修改轮播图样式 */
+.swiper-container {
+	padding: 0 30rpx;
+	margin-bottom: 30rpx;
+}
+.swiper {
+	width: 100%;
+	height: 300rpx;
+	border-radius: 15rpx;
+	overflow: hidden;
+}
+.swiper image {
+	width: 100%;
+	height: 100%;
 }
 </style>

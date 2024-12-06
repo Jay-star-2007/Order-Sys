@@ -132,12 +132,78 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./node_modules/babel-loader/lib!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/webpack-preprocess-loader??ref--13-1!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/script.js!./node_modules/@dcloudio/vue-cli-plugin-uni/packages/vue-loader/lib??vue-loader-options!./node_modules/@dcloudio/webpack-uni-mp-loader/lib/style.js!E:/HZCUCode/WechatProgram/Uni/diancan-user/pages/saoma/saoma.vue?vue&type=script&lang=js& ***!
   \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uni) {
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
 //
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var _default = {
+  data: function data() {
+    return {
+      tableNumber: ''
+    };
+  },
+  methods: {
+    // 快捷选择桌号
+    quickSelect: function quickSelect(num) {
+      this.tableNumber = num;
+    },
+    // 确认桌号
+    confirmTable: function confirmTable() {
+      if (!this.tableNumber || this.tableNumber < 1 || this.tableNumber > 20) {
+        uni.showToast({
+          title: '请输入1-20的桌号',
+          icon: 'none'
+        });
+        return;
+      }
+
+      // 跳转到点餐页面
+      uni.redirectTo({
+        url: "/pages/index/index?number=".concat(this.tableNumber)
+      });
+    }
+  }
+};
+exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 2)["default"]))
 
 /***/ }),
 
