@@ -8,7 +8,22 @@
 				<image src="/static/tab/fenxiang.svg" mode="widthFix"  class="top-search"></image>
 			</view>
 		</view>
-		 <view class="order-view">
+		
+		<!-- 轮播图组件 -->
+		<view class="swiper-container">
+			<swiper class="swiper" 
+					indicator-dots 
+					autoplay 
+					circular 
+					:interval="3000" 
+					:duration="1000">
+				<swiper-item v-for="(item,index) in swiperList" :key="index">
+					<image :src="item.image_src" mode="aspectFill"></image>
+				</swiper-item>
+			</swiper>
+		</view>
+		
+		<view class="order-view">
 			<view class="commodity">
 				<!-- 左 -->
 				<view class="order-left">
@@ -394,17 +409,21 @@ export default{
 }
 .top-search{padding-right: 50rpx;}
 /* 点餐界面 */
-.order-view{margin-top: 20rpx;}
+.order-view{
+	padding-top: 440rpx;
+	height: 100vh;
+	box-sizing: border-box;
+}
 .commodity{
 	display: flex;
-	position: fixed;
-	top: 120rpx;
+	height: 100%;
 	left: 0;
 	right: 0;
-	}
+}
 .order-left{
 	background-color: #ffffff;
 	width: 150rpx;
+	height: 100%;
 	overflow-y: auto;
 }
 .itemize-text{
@@ -428,14 +447,13 @@ export default{
 	margin-left: 2rpx;
 }
 .scroll-Hei{
-	height: 100vh;
+	height: calc(100% - 120rpx); /* 只减去底部购物车的高度 */
 	/* white-space: nowrap; */
 }
 .order-right{
 	background-color: #FFFFFF;
 	flex: 1;
 	overflow-y: auto;
-	
 }
 .classif{
 	font-size: 27rpx;
@@ -551,8 +569,13 @@ color: #cccccc;
 }
 /* 轮播图样式 */
 .swiper-container {
-	padding: 20rpx 30rpx;
-	margin-top: 120rpx;  /* 为顶部导航栏留出空间 */
+	position: fixed;
+	top: 120rpx;
+	left: 0;
+	right: 0;
+	padding: 20rpx;
+	background: #fff;
+	z-index: 1;
 }
 .swiper {
 	width: 100%;

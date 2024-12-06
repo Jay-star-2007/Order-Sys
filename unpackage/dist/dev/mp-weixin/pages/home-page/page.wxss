@@ -22,17 +22,21 @@
 }
 .top-search.data-v-2f68e6da{padding-right: 50rpx;}
 /* 点餐界面 */
-.order-view.data-v-2f68e6da{margin-top: 20rpx;}
+.order-view.data-v-2f68e6da{
+	padding-top: 440rpx;
+	height: 100vh;
+	box-sizing: border-box;
+}
 .commodity.data-v-2f68e6da{
 	display: flex;
-	position: fixed;
-	top: 120rpx;
+	height: 100%;
 	left: 0;
 	right: 0;
 }
 .order-left.data-v-2f68e6da{
 	background-color: #ffffff;
 	width: 150rpx;
+	height: 100%;
 	overflow-y: auto;
 }
 .itemize-text.data-v-2f68e6da{
@@ -56,7 +60,7 @@
 	margin-left: 2rpx;
 }
 .scroll-Hei.data-v-2f68e6da{
-	height: 100vh;
+	height: calc(100% - 120rpx); /* 只减去底部购物车的高度 */
 	/* white-space: nowrap; */
 }
 .order-right.data-v-2f68e6da{
@@ -177,8 +181,13 @@ color: #cccccc;
 }
 /* 轮播图样式 */
 .swiper-container.data-v-2f68e6da {
-	padding: 20rpx 30rpx;
-	margin-top: 120rpx;  /* 为顶部导航栏留出空间 */
+	position: fixed;
+	top: 120rpx;
+	left: 0;
+	right: 0;
+	padding: 20rpx;
+	background: #fff;
+	z-index: 1;
 }
 .swiper.data-v-2f68e6da {
 	width: 100%;
