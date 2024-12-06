@@ -141,6 +141,8 @@ export default{
 					image_src: "http://localhost/image/swiper/s3.jpg"
 				}
 			],
+			isAdditional: false, // 是否是加菜
+			currentOrderNo: '', // 当前订单号
 		}
 	},
 	methods:{
@@ -312,29 +314,33 @@ export default{
 		// 提交订单
 		async sub_database(){
 			wx.showLoading({title: '正在下单',mask:true})
-			// 1.过滤掉总价为0的购物车里的菜品;filter:过滤
 			let res = this.shopping_card.filter(item => item.total_price != 0)
-			// 2.计算总价
 			let sett_amount = 0
 			res.forEach(item => {sett_amount += item.total_price})
-			// 取出本地缓存的桌号和用餐人数
+			
 			let table_number = wx.getStorageSync('table_num')
 			let number_of_diners = wx.getStorageSync('number_of_diners')
 			
 			let order = {
-				table_number,//桌号
-				number_of_diners,//用餐人数
-				// order_time:this.$Time().utcOffset(8).format('YYYY-MM-DD HH:mm:ss'),
+				table_number,
+				number_of_diners,
 				sett_amount,
-				order_no:Code(),
-				transac_status:'unsettled',//结账状态
-				order_receiving:'mis_orders',//接单状态
+				order_no: this.isAdditional ? this.currentOrderNo : Code(),
+				transac_status:'unsettled',
+				order_receiving:'mis_orders',
 				goods_list:res
 			}
-			const res2=await requestUtil({url:"/order/create",data:order,method:"post"})
+			
+			const url = this.isAdditional ? '/order/addDishes' : '/order/create'
+			const res2 = await requestUtil({
+				url: url,
+				data: order,
+				method: "post"
+			})
+			
 			if(res2.code==0){
 				wx.redirectTo({
-				  url: '/pages/order-details/details'
+					url: '/pages/order-details/details'
 				})
 				wx.hideLoading()
 			}
@@ -342,7 +348,7 @@ export default{
 		
 		
 		// 推送订单提醒
-		push_message(){
+			push_message(){
 			var pubsub = this.goeasy.pubsub;
 			pubsub.publish({
 			    channel: "my_channel",//替换为您自己的channel
@@ -363,7 +369,13 @@ export default{
 			})
 		}
 	},
-	onLoad() {
+	onLoad(options) {
+		// 判断是否是加菜
+		if(options.isAdditional === 'true') {
+			this.isAdditional = true
+			this.currentOrderNo = options.orderNo
+		}
+		
 		// 获取用餐人数
 		this.number_people = wx.getStorageSync('number_of_diners')
 		this.baseUrl=getBaseUrl()

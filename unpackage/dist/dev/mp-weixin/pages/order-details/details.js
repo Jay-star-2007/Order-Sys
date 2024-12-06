@@ -152,60 +152,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 var _regenerator = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/regenerator */ 50));
-var _toConsumableArray2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/toConsumableArray */ 18));
+var _defineProperty2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/defineProperty */ 11));
 var _asyncToGenerator2 = _interopRequireDefault(__webpack_require__(/*! @babel/runtime/helpers/asyncToGenerator */ 52));
 var _requestUtil = __webpack_require__(/*! ../../utils/requestUtil.js */ 53);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { (0, _defineProperty2.default)(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 var app = getApp();
 var Modelmes = app.globalData.Modelmes;
 // 骨架屏
@@ -242,14 +193,14 @@ var _default = {
     get_menu: function get_menu() {
       var _this = this;
       return (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee() {
-        var table_number, res, res_data, additional_goods;
+        var table_number, res, res_data, additionalGoods, totalAmount;
         return _regenerator.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.prev = 0;
                 // 取出本地缓存的桌号和用餐人数
-                table_number = wx.getStorageSync("table_num");
+                table_number = wx.getStorageSync('table_num');
                 _context.next = 4;
                 return (0, _requestUtil.requestUtil)({
                   url: "/order/get",
@@ -262,36 +213,45 @@ var _default = {
               case 4:
                 res = _context.sent;
                 console.log(res);
-                res_data = res.goods_list;
-                console.log("res_data2:" + JSON.stringify(res_data));
+                res_data = res.goods_list; // 获取本地存储的加菜数据
+                additionalGoods = wx.getStorageSync('additional_goods') || []; // 合并原有菜品和加菜数据
+                _this.goods_data = res_data;
 
-                // 获取加菜后的菜品数据
-                additional_goods = wx.getStorageSync("order_goods_data") || []; // 合并原有的菜品和加菜后的菜品
-                _this.goods_data = [].concat((0, _toConsumableArray2.default)(res_data), (0, _toConsumableArray2.default)(additional_goods));
+                // 重新计算总价和数量
+                totalAmount = 0;
+                _this.goods_data.forEach(function (item) {
+                  totalAmount += item.total_price;
+                });
                 _this.overall = _this.goods_data.length;
-                _this.other_data = res.menu;
+
+                // 更新订单信息
+                _this.other_data = _objectSpread(_objectSpread({}, res.menu), {}, {
+                  sett_amount: totalAmount
+                });
                 _this.exist = false;
-                _context.next = 18;
+                _context.next = 19;
                 break;
-              case 15:
-                _context.prev = 15;
+              case 16:
+                _context.prev = 16;
                 _context.t0 = _context["catch"](0);
-                //TODO 处理异常
                 console.error(_context.t0);
-              case 18:
+              case 19:
               case "end":
                 return _context.stop();
             }
           }
-        }, _callee, null, [[0, 15]]);
+        }, _callee, null, [[0, 16]]);
       }))();
     },
     // 加菜
     add_Dish: function add_Dish() {
-      // 跳转到加菜页面
       wx.navigateTo({
-        url: "/pages/home-page/page" // 修改为加菜页面的路径
+        url: "/pages/home-page/page?orderNo=".concat(this.other_data.order_no, "&isAdditional=true")
       });
+    },
+    // 在页面卸载时清理本地存储的加菜数据
+    onUnload: function onUnload() {
+      wx.removeStorageSync('additional_goods');
     }
   },
   onLoad: function onLoad() {

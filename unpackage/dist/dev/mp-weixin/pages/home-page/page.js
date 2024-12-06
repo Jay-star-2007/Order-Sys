@@ -310,9 +310,13 @@ var _default = {
         image_src: "http://localhost/image/swiper/s2.jpg"
       }, {
         image_src: "http://localhost/image/swiper/s3.jpg"
-      }]
+      }],
+      isAdditional: false,
+      // 是否是加菜
+      currentOrderNo: '' // 当前订单号
     };
   },
+
   methods: {
     // 点击类目加上背景色
     itemIze: function itemIze(index, cid) {
@@ -555,7 +559,7 @@ var _default = {
     sub_database: function sub_database() {
       var _this6 = this;
       return (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee2() {
-        var res, sett_amount, table_number, number_of_diners, order, res2;
+        var res, sett_amount, table_number, number_of_diners, order, url, res2;
         return _regenerator.default.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -564,38 +568,32 @@ var _default = {
                   title: '正在下单',
                   mask: true
                 });
-                // 1.过滤掉总价为0的购物车里的菜品;filter:过滤
                 res = _this6.shopping_card.filter(function (item) {
                   return item.total_price != 0;
-                }); // 2.计算总价
+                });
                 sett_amount = 0;
                 res.forEach(function (item) {
                   sett_amount += item.total_price;
                 });
-                // 取出本地缓存的桌号和用餐人数
                 table_number = wx.getStorageSync('table_num');
                 number_of_diners = wx.getStorageSync('number_of_diners');
                 order = {
                   table_number: table_number,
-                  //桌号
                   number_of_diners: number_of_diners,
-                  //用餐人数
-                  // order_time:this.$Time().utcOffset(8).format('YYYY-MM-DD HH:mm:ss'),
                   sett_amount: sett_amount,
-                  order_no: (0, _order.Code)(),
+                  order_no: _this6.isAdditional ? _this6.currentOrderNo : (0, _order.Code)(),
                   transac_status: 'unsettled',
-                  //结账状态
                   order_receiving: 'mis_orders',
-                  //接单状态
                   goods_list: res
                 };
-                _context2.next = 9;
+                url = _this6.isAdditional ? '/order/addDishes' : '/order/create';
+                _context2.next = 10;
                 return (0, _requestUtil.requestUtil)({
-                  url: "/order/create",
+                  url: url,
                   data: order,
                   method: "post"
                 });
-              case 9:
+              case 10:
                 res2 = _context2.sent;
                 if (res2.code == 0) {
                   wx.redirectTo({
@@ -603,7 +601,7 @@ var _default = {
                   });
                   wx.hideLoading();
                 }
-              case 11:
+              case 12:
               case "end":
                 return _context2.stop();
             }
@@ -634,7 +632,13 @@ var _default = {
       });
     }
   },
-  onLoad: function onLoad() {
+  onLoad: function onLoad(options) {
+    // 判断是否是加菜
+    if (options.isAdditional === 'true') {
+      this.isAdditional = true;
+      this.currentOrderNo = options.orderNo;
+    }
+
     // 获取用餐人数
     this.number_people = wx.getStorageSync('number_of_diners');
     this.baseUrl = (0, _requestUtil.getBaseUrl)();

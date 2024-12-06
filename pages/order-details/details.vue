@@ -78,7 +78,7 @@ export default {
     async get_menu() {
       try {
         // 取出本地缓存的桌号和用餐人数
-        let table_number = wx.getStorageSync("table_num");
+        let table_number = wx.getStorageSync('table_num')
         const res = await requestUtil({
           url: "/order/get",
           data: { table_number: table_number, transac_status: "unsettled" },
@@ -87,31 +87,40 @@ export default {
         console.log(res);
 
         let res_data = res.goods_list;
-        console.log("res_data2:" + JSON.stringify(res_data));
+        // 获取本地存储的加菜数据
+        let additionalGoods = wx.getStorageSync('additional_goods') || []
+        
+        // 合并原有菜品和加菜数据
+        this.goods_data = res_data
+        
+        // 重新计算总价和数量
+        let totalAmount = 0
+        this.goods_data.forEach(item => {
+          totalAmount += item.total_price
+        })
+        this.overall = this.goods_data.length
+        
+        // 更新订单信息
+        this.other_data = {
+          ...res.menu,
+          sett_amount: totalAmount
+        }
 
-        // 获取加菜后的菜品数据
-        let additional_goods = wx.getStorageSync("order_goods_data") || [];
-
-        // 合并原有的菜品和加菜后的菜品
-        this.goods_data = [...res_data, ...additional_goods];
-
-        this.overall = this.goods_data.length;
-        this.other_data = res.menu;
-
-        this.exist = false;
+        this.exist = false
       } catch (e) {
-        //TODO 处理异常
-        console.error(e);
+        console.error(e)
       }
     },
     // 加菜
     add_Dish() {
-      // 跳转到加菜页面
       wx.navigateTo({
-         url: "/pages/home-page/page", // 修改为加菜页面的路径
-		
-      });
+        url: `/pages/home-page/page?orderNo=${this.other_data.order_no}&isAdditional=true`
+      })
     },
+    // 在页面卸载时清理本地存储的加菜数据
+    onUnload() {
+      wx.removeStorageSync('additional_goods')
+    }
   },
   onLoad() {
     this.get_menu();
