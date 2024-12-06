@@ -85,19 +85,4 @@ page{
 	color: #000000 !important;
 	background:linear-gradient(to right,#ff8f8f,#fdcaba,#ff8f8f,#ff7575) !important;
 }
-/* 修改轮播图样式 */
-.swiper-container {
-	padding: 0 30rpx;
-	margin-bottom: 30rpx;
-}
-.swiper {
-	width: 100%;
-	height: 300rpx;
-	border-radius: 15rpx;
-	overflow: hidden;
-}
-.swiper image {
-	width: 100%;
-	height: 100%;
-}
 

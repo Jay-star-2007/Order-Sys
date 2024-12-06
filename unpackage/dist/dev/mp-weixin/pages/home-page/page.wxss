@@ -22,7 +22,7 @@
 }
 .top-search.data-v-2f68e6da{padding-right: 50rpx;}
 /* 点餐界面 */
-.order-view.data-v-2f68e6da{margin-top: 120rpx;}
+.order-view.data-v-2f68e6da{margin-top: 20rpx;}
 .commodity.data-v-2f68e6da{
 	display: flex;
 	position: fixed;
@@ -174,5 +174,20 @@ color: #cccccc;
 .active.data-v-2f68e6da{
 	background-color: #FFFFFF;
 	color: #000000 !important;
+}
+/* 轮播图样式 */
+.swiper-container.data-v-2f68e6da {
+	padding: 20rpx 30rpx;
+	margin-top: 120rpx;  /* 为顶部导航栏留出空间 */
+}
+.swiper.data-v-2f68e6da {
+	width: 100%;
+	height: 300rpx;
+	border-radius: 15rpx;
+	overflow: hidden;
+}
+.swiper image.data-v-2f68e6da {
+	width: 100%;
+	height: 100%;
 }
 

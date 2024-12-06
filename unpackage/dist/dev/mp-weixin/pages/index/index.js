@@ -168,34 +168,12 @@ exports.default = void 0;
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 var _default = {
   data: function data() {
     return {
       num: -1,
       people: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-      table_number: null,
-      // 添加轮播图数据
-      swiperList: [{
-        image_src: "http://localhost/image/swiper/s1.jpg"
-      }, {
-        image_src: "http://localhost/image/swiper/s2.jpg"
-      }, {
-        image_src: "http://localhost/image/swiper/s3.jpg"
-      }]
+      table_number: null
     };
   },
   methods: {

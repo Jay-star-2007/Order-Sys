@@ -115,6 +115,17 @@ export default{
 			pro_details:{},//单个商品弹出框里的数据
 			tmplIds:'FANEJh9NPNhJrLpqQx7UhNerntR5GwEsLKK-95tuvNM',//模板id
 			number_people:0,//用餐人数
+			swiperList: [
+				{
+					image_src: "http://localhost/image/swiper/s1.jpg"
+				},
+				{
+					image_src: "http://localhost/image/swiper/s2.jpg" 
+				},
+				{
+					image_src: "http://localhost/image/swiper/s3.jpg"
+				}
+			],
 		}
 	},
 	methods:{
@@ -383,7 +394,7 @@ export default{
 }
 .top-search{padding-right: 50rpx;}
 /* 点餐界面 */
-.order-view{margin-top: 120rpx;}
+.order-view{margin-top: 20rpx;}
 .commodity{
 	display: flex;
 	position: fixed;
@@ -537,5 +548,20 @@ color: #cccccc;
 .active{
 	background-color: #FFFFFF;
 	color: #000000 !important;
+}
+/* 轮播图样式 */
+.swiper-container {
+	padding: 20rpx 30rpx;
+	margin-top: 120rpx;  /* 为顶部导航栏留出空间 */
+}
+.swiper {
+	width: 100%;
+	height: 300rpx;
+	border-radius: 15rpx;
+	overflow: hidden;
+}
+.swiper image {
+	width: 100%;
+	height: 100%;
 }
 </style>

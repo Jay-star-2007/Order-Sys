@@ -287,10 +287,17 @@ var _default = {
       //单个商品弹出框里的数据
       tmplIds: 'FANEJh9NPNhJrLpqQx7UhNerntR5GwEsLKK-95tuvNM',
       //模板id
-      number_people: 0 //用餐人数
+      number_people: 0,
+      //用餐人数
+      swiperList: [{
+        image_src: "http://localhost/image/swiper/s1.jpg"
+      }, {
+        image_src: "http://localhost/image/swiper/s2.jpg"
+      }, {
+        image_src: "http://localhost/image/swiper/s3.jpg"
+      }]
     };
   },
-
   methods: {
     // 点击类目加上背景色
     itemIze: function itemIze(index, cid) {
