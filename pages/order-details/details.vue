@@ -128,12 +128,20 @@ export default {
     },
     // 处理支付逻辑
     async handlePayment() {
-      try {
-        wx.showLoading({
-          title: '支付处理中...',
-          mask: true
+      if(this.other_data.transac_status === 'settled') {
+        wx.showToast({
+          title: '订单已支付',
+          icon: 'none'
         })
-        
+        return
+      }
+
+      wx.showLoading({
+        title: '支付处理中...',
+        mask: true
+      })
+
+      try {
         const res = await requestUtil({
           url: "/order/pay",
           method: "POST",
@@ -142,14 +150,20 @@ export default {
           }
         })
         
+        wx.hideLoading()
+
         if(res.code === 0) {
           wx.showToast({
             title: '支付成功',
             icon: 'success',
             duration: 2000
           })
-          // 支付成功后刷新页面数据
-          this.get_menu()
+          // 支付成功后返回首页
+          setTimeout(() => {
+            wx.reLaunch({
+              url: '/pages/index/index'
+            })
+          }, 2000)
         } else {
           wx.showToast({
             title: '支付失败',
@@ -158,12 +172,11 @@ export default {
         }
       } catch(error) {
         console.error('支付失败:', error)
+        wx.hideLoading()
         wx.showToast({
           title: '支付异常',
           icon: 'error'
         })
-      } finally {
-        wx.hideLoading()
       }
     }
   },
