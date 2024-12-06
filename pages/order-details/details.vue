@@ -41,9 +41,14 @@
       <view style="height: 300rpx;"></view>
     </view>
 
-    <!-- 加菜 -->
-    <view class="add-a-dish" :style="{'padding-bottom': Modelmes ? '68rpx' : ''}" @tap="add_Dish">
-      <view>加菜</view>
+    <!-- 底部操作栏 -->
+    <view class="bottom-bar" :style="{'padding-bottom': Modelmes ? '68rpx' : ''}">
+      <view class="bottom-btn add-dish" @tap="add_Dish">
+        <text>加菜</text>
+      </view>
+      <view class="bottom-btn pay-btn" @tap="handlePayment">
+        <text>结账</text>
+      </view>
     </view>
   </view>
 </template>
@@ -120,6 +125,46 @@ export default {
     // 在页面卸载时清理本地存储的加菜数据
     onUnload() {
       wx.removeStorageSync('additional_goods')
+    },
+    // 处理支付逻辑
+    async handlePayment() {
+      try {
+        wx.showLoading({
+          title: '支付处理中...',
+          mask: true
+        })
+        
+        const res = await requestUtil({
+          url: "/order/pay",
+          method: "POST",
+          data: {
+            orderNo: this.other_data.order_no
+          }
+        })
+        
+        if(res.code === 0) {
+          wx.showToast({
+            title: '支付成功',
+            icon: 'success',
+            duration: 2000
+          })
+          // 支付成功后刷新页面数据
+          this.get_menu()
+        } else {
+          wx.showToast({
+            title: '支付失败',
+            icon: 'error'
+          })
+        }
+      } catch(error) {
+        console.error('支付失败:', error)
+        wx.showToast({
+          title: '支付异常',
+          icon: 'error'
+        })
+      } finally {
+        wx.hideLoading()
+      }
     }
   },
   onLoad() {
@@ -242,8 +287,8 @@ page {
   font-size: 28rpx;
   color: #999999;
 }
-/* 加菜 */
-.add-a-dish {
+/* 底部操作栏 */
+.bottom-bar {
   background-color: #fdd2d2;
   height: 120rpx;
   position: fixed;
@@ -254,16 +299,27 @@ page {
   padding: 0 20rpx;
   z-index: 9;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
 }
-.add-a-dish view {
-  background: linear-gradient(to right, #fdd2d2, #ff8f8f, #ffbdbd, #ffd5cf);
-  width: 200rpx;
+.bottom-btn {
+  width: 45%;
   height: 75rpx;
   line-height: 75rpx;
   text-align: center;
   border-radius: 50rpx;
   font-weight: bold;
+}
+.bottom-btn text {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+}
+.add-dish {
+  background: linear-gradient(to right, #fdd2d2, #ff8f8f, #ffbdbd, #ffd5cf);
+}
+.pay-btn {
+  background: linear-gradient(to right, #ff8f8f, #ff7575);
+  color: #fff;
 }
 </style>

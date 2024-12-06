@@ -252,6 +252,66 @@ var _default = {
     // 在页面卸载时清理本地存储的加菜数据
     onUnload: function onUnload() {
       wx.removeStorageSync('additional_goods');
+    },
+    // 处理支付逻辑
+    handlePayment: function handlePayment() {
+      var _this2 = this;
+      return (0, _asyncToGenerator2.default)( /*#__PURE__*/_regenerator.default.mark(function _callee2() {
+        var res;
+        return _regenerator.default.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.prev = 0;
+                wx.showLoading({
+                  title: '支付处理中...',
+                  mask: true
+                });
+                _context2.next = 4;
+                return (0, _requestUtil.requestUtil)({
+                  url: "/order/pay",
+                  method: "POST",
+                  data: {
+                    orderNo: _this2.other_data.order_no
+                  }
+                });
+              case 4:
+                res = _context2.sent;
+                if (res.code === 0) {
+                  wx.showToast({
+                    title: '支付成功',
+                    icon: 'success',
+                    duration: 2000
+                  });
+                  // 支付成功后刷新页面数据
+                  _this2.get_menu();
+                } else {
+                  wx.showToast({
+                    title: '支付失败',
+                    icon: 'error'
+                  });
+                }
+                _context2.next = 12;
+                break;
+              case 8:
+                _context2.prev = 8;
+                _context2.t0 = _context2["catch"](0);
+                console.error('支付失败:', _context2.t0);
+                wx.showToast({
+                  title: '支付异常',
+                  icon: 'error'
+                });
+              case 12:
+                _context2.prev = 12;
+                wx.hideLoading();
+                return _context2.finish(12);
+              case 15:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[0, 8, 12, 15]]);
+      }))();
     }
   },
   onLoad: function onLoad() {
