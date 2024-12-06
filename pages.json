@@ -1,0 +1,44 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		
+		{
+			"path":"pages/index/index",
+			"style":{
+				"navigationBarTitleText":"选择人数",
+				"navigationBarBackgroundColor":"#fefefe",
+				"navigationStyle":"custom"
+			}
+		},
+		{
+			"path":"pages/home-page/page",
+			"style":{
+				"navigationBarTitleText":"城院小餐馆",
+				"navigationBarBackgroundColor":"#ffbdbd"
+			}
+		},
+		
+		
+		{
+			"path":"pages/saoma/saoma",
+			"style":{
+				"navigationBarTitleText":"扫码点餐",
+				"navigationBarBackgroundColor":"#ffbdbd"
+			}
+		},
+		
+		
+		{
+			"path":"pages/order-details/details",
+			"style":{
+				"navigationBarTitleText":"订单详情",
+				"navigationBarBackgroundColor":"#ffbdbd"
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	}
+}

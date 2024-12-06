@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "城院小餐馆",
+  "navigationBarBackgroundColor": "#ffbdbd",
+  "usingComponents": {
+    "cart": "/pages/home-page/components/shopping-cart",
+    "details": "/pages/home-page/components/goods-details",
+    "home": "/pages/skeleton-view/home"
+  }
+}
