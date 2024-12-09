@@ -262,12 +262,22 @@ var _default = {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.prev = 0;
+                if (!(_this2.other_data.transac_status === 'settled')) {
+                  _context2.next = 3;
+                  break;
+                }
+                wx.showToast({
+                  title: '订单已支付',
+                  icon: 'none'
+                });
+                return _context2.abrupt("return");
+              case 3:
                 wx.showLoading({
                   title: '支付处理中...',
                   mask: true
                 });
-                _context2.next = 4;
+                _context2.prev = 4;
+                _context2.next = 7;
                 return (0, _requestUtil.requestUtil)({
                   url: "/order/pay",
                   method: "POST",
@@ -275,42 +285,37 @@ var _default = {
                     orderNo: _this2.other_data.order_no
                   }
                 });
-              case 4:
+              case 7:
                 res = _context2.sent;
+                wx.hideLoading();
                 if (res.code === 0) {
-                  wx.showToast({
-                    title: '支付成功',
-                    icon: 'success',
-                    duration: 2000
+                  // 跳转到支付结果页面,设置状态为success
+                  wx.redirectTo({
+                    url: "/pages/pay-page/pay?status=success&amount=".concat(_this2.other_data.sett_amount, "&orderNo=").concat(_this2.other_data.order_no, "&transac_status=success")
                   });
-                  // 支付成功后刷新页面数据
-                  _this2.get_menu();
                 } else {
-                  wx.showToast({
-                    title: '支付失败',
-                    icon: 'error'
+                  // 支付失败时跳转,设置状态为unsettled
+                  wx.redirectTo({
+                    url: "/pages/pay-page/pay?status=fail&amount=".concat(_this2.other_data.sett_amount, "&orderNo=").concat(_this2.other_data.order_no, "&transac_status=unsettled")
                   });
                 }
-                _context2.next = 12;
+                _context2.next = 17;
                 break;
-              case 8:
-                _context2.prev = 8;
-                _context2.t0 = _context2["catch"](0);
-                console.error('支付失败:', _context2.t0);
-                wx.showToast({
-                  title: '支付异常',
-                  icon: 'error'
-                });
               case 12:
                 _context2.prev = 12;
+                _context2.t0 = _context2["catch"](4);
+                console.error('支付失败:', _context2.t0);
                 wx.hideLoading();
-                return _context2.finish(12);
-              case 15:
+                // 发生错误时跳转,设置状态为unsettled
+                wx.redirectTo({
+                  url: "/pages/pay-page/pay?status=fail&amount=".concat(_this2.other_data.sett_amount, "&orderNo=").concat(_this2.other_data.order_no, "&transac_status=unsettled")
+                });
+              case 17:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[0, 8, 12, 15]]);
+        }, _callee2, null, [[4, 12]]);
       }))();
     }
   },

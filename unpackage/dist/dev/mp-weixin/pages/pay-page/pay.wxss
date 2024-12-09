@@ -1,0 +1,165 @@
+
+.pay-result {
+  padding: 40rpx;
+  min-height: 100vh;
+  background: #fff;
+}
+
+/* 结果动画样式 */
+.result-animation {
+  display: flex;
+  justify-content: center;
+  margin: 60rpx 0;
+}
+.circle {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  -webkit-animation: scaleIn 0.3s ease-out;
+          animation: scaleIn 0.3s ease-out;
+}
+.circle.success {
+  background: linear-gradient(135deg, #52c41a, #85ce61);
+}
+.circle.fail {
+  background: linear-gradient(135deg, #ff4d4f, #ff7875);
+}
+.icon {
+  font-size: 80rpx;
+  color: #fff;
+}
+
+/* 结果文本样式 */
+.result-text {
+  text-align: center;
+  margin-bottom: 60rpx;
+}
+.status {
+  display: block;
+  font-size: 40rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+}
+.amount {
+  display: block;
+  font-size: 60rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+.tips {
+  font-size: 28rpx;
+  color: #999;
+}
+
+/* 订单信息样式 */
+.order-info {
+  background: #f8f8f8;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 60rpx;
+}
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+.info-item:last-child {
+  margin-bottom: 0;
+}
+.label {
+  color: #666;
+  font-size: 28rpx;
+}
+.value {
+  color: #333;
+  font-size: 28rpx;
+}
+
+/* 按钮样式 */
+.bottom-btns {
+  display: flex;
+  justify-content: center;
+  gap: 30rpx;
+  margin-bottom: 60rpx;
+}
+.btn {
+  flex: 1;
+  max-width: 300rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-radius: 44rpx;
+  font-size: 32rpx;
+  text-align: center;
+}
+.primary {
+  background: linear-gradient(to right, #ff8f8f, #ff7575);
+  color: #fff;
+  border: none;
+}
+.outline {
+  background: #fff;
+  color: #ff7575;
+  border: 2rpx solid #ff7575;
+}
+
+/* 推荐菜品样式 */
+.recommendations {
+  margin-top: 60rpx;
+}
+.rec-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 30rpx;
+  display: block;
+}
+.rec-list {
+  white-space: nowrap;
+}
+.rec-item {
+  display: inline-block;
+  margin-right: 30rpx;
+  width: 200rpx;
+}
+.rec-item image {
+  width: 200rpx;
+  height: 200rpx;
+  border-radius: 16rpx;
+}
+.dish-name {
+  font-size: 28rpx;
+  color: #333;
+  margin: 10rpx 0;
+  display: block;
+}
+.dish-price {
+  font-size: 28rpx;
+  color: #ff7575;
+  font-weight: bold;
+}
+
+/* 动画关键帧 */
+@-webkit-keyframes scaleIn {
+from {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+}
+to {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+}
+}
+@keyframes scaleIn {
+from {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+}
+to {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+}
+}
+

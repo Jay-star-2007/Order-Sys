@@ -153,29 +153,22 @@ export default {
         wx.hideLoading()
 
         if(res.code === 0) {
-          wx.showToast({
-            title: '支付成功',
-            icon: 'success',
-            duration: 2000
+          // 跳转到支付结果页面,设置状态为success
+          wx.redirectTo({
+            url: `/pages/pay-page/pay?status=success&amount=${this.other_data.sett_amount}&orderNo=${this.other_data.order_no}&transac_status=success`
           })
-          // 支付成功后返回首页
-          setTimeout(() => {
-            wx.reLaunch({
-              url: '/pages/index/index'
-            })
-          }, 2000)
         } else {
-          wx.showToast({
-            title: '支付失败',
-            icon: 'error'
+          // 支付失败时跳转,设置状态为unsettled
+          wx.redirectTo({
+            url: `/pages/pay-page/pay?status=fail&amount=${this.other_data.sett_amount}&orderNo=${this.other_data.order_no}&transac_status=unsettled`
           })
         }
-      } catch(error) {
+      } catch (error) {
         console.error('支付失败:', error)
         wx.hideLoading()
-        wx.showToast({
-          title: '支付异常',
-          icon: 'error'
+        // 发生错误时跳转,设置状态为unsettled
+        wx.redirectTo({
+          url: `/pages/pay-page/pay?status=fail&amount=${this.other_data.sett_amount}&orderNo=${this.other_data.order_no}&transac_status=unsettled`
         })
       }
     }

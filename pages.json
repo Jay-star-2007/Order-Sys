@@ -1,5 +1,12 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	"pages": [ 
+		{
+			"path":"pages/saoma/saoma",
+			"style":{
+				"navigationBarTitleText":"扫码点餐",
+				"navigationBarBackgroundColor":"#ffbdbd"
+			}
+		},
 		
 		{
 			"path":"pages/index/index",
@@ -18,13 +25,7 @@
 		},
 		
 		
-		{
-			"path":"pages/saoma/saoma",
-			"style":{
-				"navigationBarTitleText":"扫码点餐",
-				"navigationBarBackgroundColor":"#ffbdbd"
-			}
-		},
+		
 		
 		
 		{
@@ -32,6 +33,13 @@
 			"style":{
 				"navigationBarTitleText":"订单详情",
 				"navigationBarBackgroundColor":"#ffbdbd"
+			}
+		},
+		{
+			"path": "pages/pay-page/pay",
+			"style": {
+				"navigationBarTitleText": "支付结果",
+				"navigationBarBackgroundColor": "#ffffff"
 			}
 		}
 	],

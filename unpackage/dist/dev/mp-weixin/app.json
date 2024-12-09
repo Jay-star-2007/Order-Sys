@@ -1,9 +1,10 @@
 {
   "pages": [
+    "pages/saoma/saoma",
     "pages/index/index",
     "pages/home-page/page",
-    "pages/saoma/saoma",
-    "pages/order-details/details"
+    "pages/order-details/details",
+    "pages/pay-page/pay"
   ],
   "subPackages": [],
   "window": {
